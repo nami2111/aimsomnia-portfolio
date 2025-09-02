@@ -112,5 +112,22 @@
     </footer>
 
     <script src="./script.js"></script>
+    
+    <!-- Juno Analytics -->
+    <script type="module">
+      import { initOrbiter } from "https://cdn.jsdelivr.net/npm/@junobuild/analytics@0.2.0/+esm";
+
+      document.addEventListener(
+        "DOMContentLoaded",
+        () =>
+          initOrbiter({
+            satelliteId: "njql7-pqaaa-aaaal-asagq-cai", // Satellite ID from juno.config.json
+            orbiterId: "p2pi7-hiaaa-aaaal-asaia-cai" // Orbiter ID from juno.config.json
+          }),
+        {
+          once: true
+        }
+      );
+    </script>
   </body>
 </html>

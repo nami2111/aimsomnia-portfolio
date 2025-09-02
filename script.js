@@ -1,4 +1,22 @@
+      // Global variable to hold the Juno Analytics trackEvent function
+      let junoTrackEvent = null;
+
+      // Try to initialize Juno Analytics event tracking
+      const initJunoEventTracking = async () => {
+        try {
+          const module = await import('https://cdn.jsdelivr.net/npm/@junobuild/analytics@0.2.0/+esm');
+          if (module && typeof module.trackEvent === 'function') {
+            junoTrackEvent = module.trackEvent;
+          }
+        } catch (error) {
+          // Silently fail to avoid console warnings for users
+        }
+      };
+
       document.addEventListener('DOMContentLoaded', () => {
+        // Initialize Juno Analytics event tracking
+        initJunoEventTracking();
+
         const cards = document.querySelectorAll('article.group');
         cards.forEach(card => {
           card.addEventListener('keydown', e => { if (e.key === 'Enter') card.querySelector('a').click(); });
@@ -93,7 +111,7 @@
                     <div class="text-right">${item.year || ''}</div>
                   </div>
                   <div class="mt-auto pt-4">
-                    <a href="${item.externalUrl}" target="_blank" rel="noopener" class="inline-flex items-center justify-center w-full rounded-lg bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 transition">Check It!</a>
+                    <a href="${item.externalUrl}" target="_blank" rel="noopener" class="inline-flex items-center justify-center w-full rounded-lg bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 transition collection-link" data-collection="${item.name}">Check It!</a>
                   </div>
                 </div>`;
               frag.appendChild(a);
@@ -124,13 +142,30 @@
                 <div class="md:w-[30%] flex flex-col justify-start pt-0">
                   <h3 class="text-2xl font-bold text-white mb-4">${item.title}</h3>
                   <p class="text-gray-300 mb-6">${item.project_description}</p>
-                  <a href="${item.project_url}" target="_blank" rel="noopener" class="inline-flex items-center justify-center rounded-lg bg-white/10 px-6 py-3 text-sm font-medium text-white hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 transition w-fit">
+                  <a href="${item.project_url}" target="_blank" rel="noopener" class="inline-flex items-center justify-center rounded-lg bg-white/10 px-6 py-3 text-sm font-medium text-white hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 transition w-fit project-link" data-project="${item.title}">
                     Visit Project
                   </a>
                 </div>`;
               frag.appendChild(projectDiv);
             });
             vibeProjectContainer.appendChild(frag);
+            
+            // Add event listeners for project links
+            document.querySelectorAll('.project-link').forEach(link => {
+              link.addEventListener('click', (e) => {
+                const projectName = e.target.getAttribute('data-project') || e.target.textContent.trim();
+                // Only track if we have a project name
+                if (projectName && junoTrackEvent) {
+                  junoTrackEvent({
+                    name: 'project_view',
+                    metadata: {
+                      project: projectName,
+                      url: e.target.href
+                    }
+                  });
+                }
+              });
+            });
           })
           .catch(() => {
             const div = document.createElement('div');
@@ -138,4 +173,23 @@
             div.textContent = 'Failed to load projects.';
             vibeProjectContainer.appendChild(div);
           });
+
+        // Add event listeners for collection links after they're loaded
+        setTimeout(() => {
+          document.querySelectorAll('.collection-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+              const collectionName = e.target.getAttribute('data-collection') || e.target.textContent.trim();
+              // Only track if we have a collection name
+              if (collectionName && junoTrackEvent) {
+                junoTrackEvent({
+                  name: 'collection_view',
+                  metadata: {
+                    collection: collectionName,
+                    url: e.target.href
+                  }
+                });
+              }
+            });
+          });
+        }, 1000);
       });
