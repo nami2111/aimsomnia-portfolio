@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AIMSOMNIA Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Google Sans Code"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            },
+            keyframes: {
+              pulseDot: {
+                '0%, 100%': { transform: 'scale(1)' },
+                '50%': { transform: 'scale(2.2)' },
+              },
+            },
+            animation: {
+              pulseDot: 'pulseDot 2.2s ease-in-out infinite',
+            },
+          },
+        },
+      };
+    </script>
+    <meta name="description" content="AIMSOMNIA — dark-themed, responsive single-page collection" />
+  </head>
+  <body class="h-full bg-black text-gray-100 antialiased selection:bg-white/20 selection:text-white font-sans">
+    <header class="bg-black">
+      <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+        <a href="#" class="text-lg font-semibold tracking-wide text-white">AIMSOMNIA</a>
+        <div class="hidden sm:flex gap-6 text-sm text-gray-300">
+          <a href="#collection" class="hover:text-white transition">Collection</a>
+          <a href="#about" class="hover:text-white transition">About</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Hero Section -->
+      <section class="relative overflow-hidden bg-black">
+        <div id="ascii-field" class="absolute inset-0 pointer-events-none font-mono text-[20px] leading-[20px] text-white/10 whitespace-pre"></div>
+        <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center py-16 sm:py-24 text-center">
+            <pre id="hero-rotator" class="text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] 2xl:text-[12rem] leading-none font-extrabold text-white uppercase tracking-tight whitespace-pre overflow-hidden max-w-full mx-auto">AIMSOMNIA</pre>
+            <p class="mt-6 text-base sm:text-lg text-gray-300">+++A Journey to Better+++</p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Collection Section -->
+      <section id="collection" class="bg-neutral-950 border-t border-white/5">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+          <div class="mb-10 flex items-end justify-between">
+            <h2 class="text-3xl sm:text-4xl font-bold text-white">Collection</h2>
+            <span class="text-sm text-gray-400">13+ items</span>
+          </div>
+
+          <div id="collection-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Vibe-Project Section -->
+      <section id="vibe-project" class="bg-black border-t border-white/5">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+          <div class="mb-10">
+            <h2 class="text-3xl sm:text-4xl font-bold text-white">Vibe-Project</h2>
+          </div>
+
+          <div id="vibe-project-container" class="flex flex-col md:flex-row gap-8 items-center">
+            <!-- Project preview will be inserted here by JavaScript -->
+          </div>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section id="about" class="bg-black">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 text-center">
+          <h2 class="text-3xl sm:text-4xl font-bold text-white">About</h2>
+          <p class="mt-8 text-gray-300 leading-relaxed mx-auto max-w-6xl text-justify">My artistic journey began with a fascination for AI-generated art, which sparked a deeper desire to create on my own. I started learning digital art through tools like Photoshop and GoPaint, then expanded into motion graphics using After Effects. Drawn to the charm of simpler, more expressive visuals, I eventually explored pixel art with Aseprite. Each medium I experimented with gave me new perspectives on visual storytelling and helped shape my creative approach. Outside the world of art, I also spend time learning general-purpose programming—exploring logic and structure in code as part of my interest in technology. This collection is a reflection of my ongoing journey through art: full of exploration, experimentation, and continuous growth.</p>
+
+          <div class="mt-8 flex items-center justify-center gap-6">
+            <a href="https://x.com/aimsomnia" target="_blank" rel="noopener noreferrer" aria-label="Follow AIMSOMNIA on X" class="text-gray-300 hover:text-white transition p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-white/30">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6"><path d="M18.244 2.25h3.308l-7.227 8.26 8.487 11.24H16.17l-5.35-6.987-6.116 6.987H1.393l7.73-8.833L1 2.25h7.08l4.83 6.354 5.334-6.354Zm-1.16 19.5h1.833L6.01 3.125H4.063L17.084 21.75Z"/></svg>
+            </a>
+            <a href="https://taggr.network/user/aimsomnia" target="_blank" rel="noopener noreferrer" aria-label="Follow on Taggr" class="text-gray-300 hover:text-white transition p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-white/30">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="2" width="3" height="20" rx="0.5"></rect><rect x="17" y="2" width="3" height="20" rx="0.5"></rect><rect x="2" y="6.5" width="20" height="3" rx="0.5"></rect><rect x="2" y="14.5" width="20" height="3" rx="0.5"></rect></svg>
+            </a>
+            <a href="https://distrikt.app/u/aimsomnia" target="_blank" rel="noopener noreferrer" aria-label="Follow on Distrikt" class="text-gray-300 hover:text-white transition p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-white/30">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M0.5,10 L3.5,10 C3.776,10 4,10.224 4,10.5 L4,19.5 C4,19.776 4.224,20 4.5,20 L13.5,20 C13.776,20 14,20.224 14,20.5 L14,23.5 C14,23.776 13.776,24 13.5,24 L0.5,24 C0.224,24 0,23.776 0,23.5 L0,10.5 C0,10.224 0.224,10 0.5,10 Z"></path><path d="M5.5,4 L18.5,4 C18.776,4 19,4.224 19,4.5 L19,17.5 C19,17.776 18.776,18 18.5,18 L15.5,18 C15.224,18 15,17.776 15,17.5 L15,8.5 C15,8.224 14.776,8 14.5,8 L5.5,8 C5.224,8 5,7.776 5,7.5 L5,4.5 C5,4.224 5.224,4 5.5,4 Z"></path><path d="M20.5,0 L23.5,0 C23.776,0 24,0.224 24,0.5 L24,3.5 C24,3.776 23.776,4 23.5,4 L20.5,4 C20.224,4 20,3.776 20,3.5 L20,0.5 C20,0.224 20.224,0 20.5,0 Z"></path></svg>
+            </a>
+            <a href="https://github.com/nami2111" target="_blank" rel="noopener noreferrer" aria-label="View GitHub profile" class="text-gray-300 hover:text-white transition p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-white/30">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-neutral-950 border-t border-white/5">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 text-center">
+        <p class="text-sm text-gray-400">© 2025 AIMSOMNIA. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

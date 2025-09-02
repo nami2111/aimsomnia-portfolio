@@ -1,0 +1,8 @@
+{
+  "name": "aimsomnia-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build": "mkdir -p build && cp index.html script.js collections.json build/"
+  }
+}
