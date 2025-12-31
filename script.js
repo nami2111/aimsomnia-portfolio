@@ -110,20 +110,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const createCollectionCard = (item) => {
     const a = document.createElement('article');
-    a.className = 'group bg-zinc-900 rounded-xl overflow-hidden shadow-lg shadow-black/40 ring-1 ring-white/5 transition transform hover:-translate-y-1 hover:shadow-black/60 flex flex-col';
+    a.className = 'group bg-zinc-900 dark:bg-gray-100 rounded-xl overflow-hidden shadow-lg shadow-black/40 dark:shadow-black/10 ring-1 ring-white/5 dark:ring-black/5 transition transform hover:-translate-y-1 hover:shadow-black/60 dark:hover:shadow-black/20 flex flex-col';
     a.innerHTML = `
       <div class="relative h-48 overflow-hidden">
         <img src="${item.image}" alt="${item.name}" loading="lazy" class="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
       </div>
       <div class="p-5 flex-1 flex flex-col">
-        <h3 class="text-xl font-semibold text-white">${item.name}</h3>
-        <p class="mt-2 text-sm text-gray-300 line-clamp-3 min-h-[3.5rem]">${item.description || ''}</p>
-        <div class="mt-4 grid grid-cols-2 gap-2 text-xs text-gray-400 min-h-[1.25rem] items-end">
+        <h3 class="text-xl font-semibold text-white dark:text-black">${item.name}</h3>
+        <p class="mt-2 text-sm text-gray-300 dark:text-gray-700 line-clamp-3 min-h-[3.5rem]">${item.description || ''}</p>
+        <div class="mt-4 grid grid-cols-2 gap-2 text-xs text-gray-400 dark:text-gray-600 min-h-[1.25rem] items-end">
           <div class="truncate">${item.type || ''}</div>
           <div class="text-right">${item.year || ''}</div>
         </div>
         <div class="mt-auto pt-4">
-          <a href="${item.externalUrl}" target="_blank" rel="noopener" class="inline-flex items-center justify-center w-full rounded-lg bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 transition collection-link" data-collection="${item.name}">Check It!</a>
+          <a href="${item.externalUrl}" target="_blank" rel="noopener" class="inline-flex items-center justify-center w-full rounded-lg bg-white/10 dark:bg-black/10 px-4 py-2 text-sm font-medium text-white dark:text-black hover:bg-white/20 dark:hover:bg-black/20 focus:outline-none focus:ring-2 focus:ring-white/30 dark:focus:ring-black/30 transition collection-link" data-collection="${item.name}">Check It!</a>
         </div>
       </div>`;
     const img = a.querySelector('img');
@@ -171,10 +171,10 @@ document.addEventListener('DOMContentLoaded', () => {
       allItems = data.collections || [];
       
       const types = new Set(allItems.map(item => item.type).filter(Boolean));
-      filterButtons.innerHTML = '<button class="filter-btn active px-3 py-1.5 text-sm rounded-lg bg-white/10 text-white hover:bg-white/20 transition" data-filter="all">All</button>';
+      filterButtons.innerHTML = '<button class="filter-btn active px-3 py-1.5 text-sm rounded-lg bg-white/10 dark:bg-black/10 text-white dark:text-black hover:bg-white/20 dark:hover:bg-black/20 transition" data-filter="all">All</button>';
       types.forEach(type => {
         const btn = document.createElement('button');
-        btn.className = 'filter-btn px-3 py-1.5 text-sm rounded-lg bg-zinc-800 text-gray-300 hover:bg-zinc-700 transition';
+        btn.className = 'filter-btn px-3 py-1.5 text-sm rounded-lg bg-zinc-800 dark:bg-gray-200 text-gray-300 dark:text-gray-700 hover:bg-zinc-700 dark:hover:bg-gray-300 transition';
         btn.dataset.filter = type;
         btn.textContent = type;
         filterButtons.appendChild(btn);
@@ -183,11 +183,11 @@ document.addEventListener('DOMContentLoaded', () => {
       filterButtons.addEventListener('click', (e) => {
         if (e.target.classList.contains('filter-btn')) {
           document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.classList.remove('active', 'bg-white/10', 'text-white');
-            btn.classList.add('bg-zinc-800', 'text-gray-300');
+            btn.classList.remove('active', 'bg-white/10', 'dark:bg-black/10', 'text-white', 'dark:text-black');
+            btn.classList.add('bg-zinc-800', 'dark:bg-gray-200', 'text-gray-300', 'dark:text-gray-700');
           });
-          e.target.classList.add('active', 'bg-white/10', 'text-white');
-          e.target.classList.remove('bg-zinc-800', 'text-gray-300');
+          e.target.classList.add('active', 'bg-white/10', 'dark:bg-black/10', 'text-white', 'dark:text-black');
+          e.target.classList.remove('bg-zinc-800', 'dark:bg-gray-200', 'text-gray-300', 'dark:text-gray-700');
           filterAndSearchCollections();
         }
       });
@@ -233,12 +233,12 @@ document.addEventListener('DOMContentLoaded', () => {
         projectDiv.className = 'flex flex-col md:flex-row gap-8';
         projectDiv.innerHTML = `
           <div class="md:w-[70%] flex justify-center">
-            <img src="${item.preview}" alt="${item.title} preview" loading="lazy" class="rounded-lg shadow-lg object-contain w-full h-auto" style="max-height: 700px;" />
+            <img src="${item.preview}" alt="${item.title} preview" loading="lazy" class="rounded-lg shadow-lg dark:shadow-lg/20 object-contain w-full h-auto" style="max-height: 700px;" />
           </div>
           <div class="md:w-[30%] flex flex-col justify-start pt-0">
-            <h3 class="text-2xl font-bold text-white mb-4">${item.title}</h3>
-            <p class="text-gray-300 mb-6">${item.project_description}</p>
-            <a href="${item.project_url}" target="_blank" rel="noopener" class="inline-flex items-center justify-center rounded-lg bg-white/10 px-6 py-3 text-sm font-medium text-white hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 transition w-fit project-link" data-project="${item.title}">
+            <h3 class="text-2xl font-bold text-white dark:text-black mb-4">${item.title}</h3>
+            <p class="text-gray-300 dark:text-gray-700 mb-6">${item.project_description}</p>
+            <a href="${item.project_url}" target="_blank" rel="noopener" class="inline-flex items-center justify-center rounded-lg bg-white/10 dark:bg-black/10 px-6 py-3 text-sm font-medium text-white dark:text-black hover:bg-white/20 dark:hover:bg-black/20 focus:outline-none focus:ring-2 focus:ring-white/30 dark:focus:ring-black/30 transition w-fit project-link" data-project="${item.title}">
               Visit Project
             </a>
           </div>`;
@@ -289,5 +289,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
   scrollToTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  const themeToggle = document.getElementById('theme-toggle');
+  const html = document.documentElement;
+
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  html.classList.toggle('dark', savedTheme === 'light');
+  updateThemeIcons(savedTheme === 'light');
+
+  themeToggle.addEventListener('click', () => {
+    const isLight = html.classList.toggle('dark');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    updateThemeIcons(isLight);
+  });
+
+  function updateThemeIcons(isLight) {
+    const darkIcon = themeToggle.querySelector('.dark-icon');
+    const lightIcon = themeToggle.querySelector('.light-icon');
+    if (isLight) {
+      darkIcon.classList.remove('hidden');
+      lightIcon.classList.add('hidden');
+    } else {
+      darkIcon.classList.add('hidden');
+      lightIcon.classList.remove('hidden');
+    }
+  }
+
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.fade-in-section').forEach(section => {
+    observer.observe(section);
   });
 });
