@@ -8,7 +8,7 @@ const initAsciiCanvas = () => {
   const ctx = canvas.getContext('2d');
   const isDark = () => document.documentElement.classList.contains('dark');
   
-  const charSet = ['~', '`', '-', '=', '+', '*', '#', '%', '@', '█', '▓', '▒', '░', '■'];
+  const charSet = ['·', '⋅', '∘', '○', '◦', '◎', '●', '◉', '■', '█', '▓', '█'];
   
   const resize = () => {
     const rect = canvas.parentElement.getBoundingClientRect();
@@ -16,33 +16,67 @@ const initAsciiCanvas = () => {
     canvas.height = rect.height;
   };
   
-  const cellW = 10, cellH = 16;
+  const cellW = 8, cellH = 14;
   let cols, rows;
   let time = 0;
-  let particles = [];
+  let waves = [];
+  let blobs = [];
   
-  const initParticles = () => {
+  const initWaves = () => {
     cols = Math.ceil(canvas.width / cellW);
     rows = Math.ceil(canvas.height / cellH);
-    particles = [];
-    for (let i = 0; i < 40; i++) {
-      particles.push({
+    waves = [];
+    for (let i = 0; i < 6; i++) {
+      waves.push({
+        cx: Math.random() * canvas.width,
+        cy: Math.random() * canvas.height,
+        rx: 100 + Math.random() * 200,
+        ry: 80 + Math.random() * 150,
+        speed: 0.3 + Math.random() * 0.5,
+        angle: Math.random() * Math.PI * 2,
+        rotSpeed: (Math.random() - 0.5) * 0.02,
+        phase: Math.random() * Math.PI * 2
+      });
+    }
+    
+    blobs = [];
+    for (let i = 0; i < 25; i++) {
+      blobs.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 2,
-        vy: (Math.random() - 0.5) * 2,
-        phase: Math.random() * Math.PI * 2,
-        speed: 0.3 + Math.random() * 0.7,
-        size: 20 + Math.random() * 40
+        vx: (Math.random() - 0.5) * 1.5,
+        vy: (Math.random() - 0.5) * 1.5,
+        radius: 30 + Math.random() * 80,
+        freq: 0.5 + Math.random() * 1.5,
+        amp: 0.3 + Math.random() * 0.7,
+        offset: Math.random() * Math.PI * 2
       });
     }
   };
   
-  const noise2D = (x, y, t) => {
-    const n1 = Math.sin(x * 0.02 + t * 0.5) * Math.cos(y * 0.015 + t * 0.3);
-    const n2 = Math.sin((x + y) * 0.01 + t * 0.7);
-    const n3 = Math.sin(x * 0.03 - t * 0.4) * Math.sin(y * 0.025 + t * 0.6);
-    return (n1 + n2 * 0.5 + n3 * 0.3) * 0.5 + 0.5;
+  const getWaveValue = (x, y, t) => {
+    let v = 0;
+    waves.forEach(w => {
+      const dx = x - w.cx;
+      const dy = y - w.cy;
+      const rotX = dx * Math.cos(w.angle) - dy * Math.sin(w.angle);
+      const rotY = dx * Math.sin(w.angle) + dy * Math.cos(w.angle);
+      const ellipse = Math.sqrt((rotX / w.rx) ** 2 + (rotY / w.ry) ** 2);
+      v += Math.sin(ellipse * 6 - t * w.speed + w.phase) * Math.exp(-ellipse * 0.8);
+    });
+    return v * 0.5 + 0.5;
+  };
+  
+  const getBlobValue = (x, y, t) => {
+    let v = 0;
+    blobs.forEach(b => {
+      const dx = x - b.x;
+      const dy = y - b.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const wave = Math.sin(dist * b.freq * 0.03 - t + b.offset) * b.amp;
+      v += Math.max(0, 1 - dist / b.radius) * (wave * 0.5 + 0.5);
+    });
+    return Math.min(1, v);
   };
   
   let startTime = performance.now();
@@ -58,44 +92,51 @@ const initAsciiCanvas = () => {
     ctx.font = `${cellH}px monospace`;
     ctx.textBaseline = 'top';
     
-    const scrollY = window.scrollY;
-    
-    particles.forEach(p => {
-      p.x += p.vx * p.speed;
-      p.y += p.vy * p.speed;
-      p.phase += 0.05;
+    waves.forEach(w => {
+      w.cx += Math.cos(w.angle) * w.speed * 0.5;
+      w.cy += Math.sin(w.angle) * w.speed * 0.5;
+      w.angle += w.rotSpeed;
       
-      if (p.x < -50) p.x = canvas.width + 50;
-      if (p.x > canvas.width + 50) p.x = -50;
-      if (p.y < -50) p.y = canvas.height + 50;
-      if (p.y > canvas.height + 50) p.y = -50;
+      if (w.cx < -w.rx) w.cx = canvas.width + w.rx;
+      if (w.cx > canvas.width + w.rx) w.cx = -w.rx;
+      if (w.cy < -w.ry) w.cy = canvas.height + w.ry;
+      if (w.cy > canvas.height + w.ry) w.cy = -w.ry;
     });
+    
+    blobs.forEach(b => {
+      b.x += b.vx;
+      b.y += b.vy;
+      
+      if (b.x < -b.radius) b.x = canvas.width + b.radius;
+      if (b.x > canvas.width + b.radius) b.x = -b.radius;
+      if (b.y < -b.radius) b.y = canvas.height + b.radius;
+      if (b.y > canvas.height + b.radius) b.y = -b.radius;
+    });
+    
+    const scrollY = window.scrollY;
+    const offsetY = scrollY * 0.08;
     
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < cols; x++) {
-        const worldY = y * cellH + scrollY * 0.1;
+        const px = x * cellW;
+        const py = y * cellH + offsetY;
         
-        let combined = 0;
-        particles.forEach(p => {
-          const dx = x * cellW - p.x;
-          const dy = y * cellH - p.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          const influence = Math.max(0, 1 - dist / p.size);
-          combined += influence * (Math.sin(p.phase + dist * 0.05) * 0.5 + 0.5);
-        });
+        const waveV = getWaveValue(px, py, time);
+        const blobV = getBlobValue(px, py, time);
+        const noise = Math.sin(x * 0.15 + time * 0.4) * Math.cos(y * 0.12 + time * 0.3) * 0.5 + 0.5;
         
-        const n = noise2D(x + time * 0.5, y + time * 0.3, time);
-        const v = (n * 0.4 + (combined / particles.length) * 0.6);
+        const v = waveV * 0.4 + blobV * 0.4 + noise * 0.2;
         const idx = Math.floor(v * (charSet.length - 1));
         const char = charSet[Math.min(idx, charSet.length - 1)];
         
-        const alpha = dark ? 0.08 + v * 0.35 : 0.12 + v * 0.45;
+        const charAlpha = dark ? 0.15 + v * 0.5 : 0.2 + v * 0.55;
         
-        ctx.fillStyle = dark 
-          ? `rgba(100, 200, 255, ${alpha})`
-          : `rgba(80, 80, 200, ${alpha})`;
+        const r = dark ? 80 : 40;
+        const g = dark ? 180 : 60;
+        const b = dark ? 255 : 140;
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${charAlpha})`;
         
-        ctx.fillText(char, x * cellW, y * cellH);
+        ctx.fillText(char, px, py);
       }
     }
     
@@ -103,8 +144,8 @@ const initAsciiCanvas = () => {
   };
   
   resize();
-  initParticles();
-  window.addEventListener('resize', debounce(() => { resize(); initParticles(); }, 250));
+  initWaves();
+  window.addEventListener('resize', debounce(() => { resize(); initWaves(); }, 250));
   requestAnimationFrame(render);
 };
 
