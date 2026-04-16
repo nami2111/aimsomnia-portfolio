@@ -62,7 +62,7 @@ const initAsciiCanvas = () => {
       const rotX = dx * Math.cos(w.angle) - dy * Math.sin(w.angle);
       const rotY = dx * Math.sin(w.angle) + dy * Math.cos(w.angle);
       const ellipse = Math.sqrt((rotX / w.rx) ** 2 + (rotY / w.ry) ** 2);
-      v += Math.sin(ellipse * 6 - t * w.speed + w.phase) * Math.exp(-ellipse * 0.8);
+      v += Math.sin(ellipse * 6 - t * w.speed * 2 + w.phase) * Math.exp(-ellipse * 0.8);
     });
     return v * 0.5 + 0.5;
   };
@@ -93,9 +93,9 @@ const initAsciiCanvas = () => {
     ctx.textBaseline = 'top';
     
     waves.forEach(w => {
-      w.cx += Math.cos(w.angle) * w.speed * 0.5;
-      w.cy += Math.sin(w.angle) * w.speed * 0.5;
-      w.angle += w.rotSpeed;
+      w.cx += Math.cos(w.angle) * w.speed * 1.5;
+      w.cy += Math.sin(w.angle) * w.speed * 1.5;
+      w.angle += w.rotSpeed * 1.5;
       
       if (w.cx < -w.rx) w.cx = canvas.width + w.rx;
       if (w.cx > canvas.width + w.rx) w.cx = -w.rx;
@@ -104,8 +104,8 @@ const initAsciiCanvas = () => {
     });
     
     blobs.forEach(b => {
-      b.x += b.vx;
-      b.y += b.vy;
+      b.x += b.vx * 2;
+      b.y += b.vy * 2;
       
       if (b.x < -b.radius) b.x = canvas.width + b.radius;
       if (b.x > canvas.width + b.radius) b.x = -b.radius;
@@ -123,7 +123,7 @@ const initAsciiCanvas = () => {
         
         const waveV = getWaveValue(px, py, time);
         const blobV = getBlobValue(px, py, time);
-        const noise = Math.sin(x * 0.15 + time * 0.4) * Math.cos(y * 0.12 + time * 0.3) * 0.5 + 0.5;
+        const noise = Math.sin(x * 0.15 + time * 0.8) * Math.cos(y * 0.12 + time * 0.6) * 0.5 + 0.5;
         
         const v = waveV * 0.4 + blobV * 0.4 + noise * 0.2;
         const idx = Math.floor(v * (charSet.length - 1));
