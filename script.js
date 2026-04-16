@@ -30,8 +30,8 @@ const initAsciiCanvas = () => {
       waves.push({
         cx: Math.random() * canvas.width,
         cy: Math.random() * canvas.height,
-        rx: 100 + Math.random() * 200,
-        ry: 80 + Math.random() * 150,
+        rx: 200 + Math.random() * 400,
+        ry: 160 + Math.random() * 300,
         speed: 0.3 + Math.random() * 0.5,
         angle: Math.random() * Math.PI * 2,
         rotSpeed: (Math.random() - 0.5) * 0.02,
@@ -46,7 +46,7 @@ const initAsciiCanvas = () => {
         y: Math.random() * canvas.height,
         vx: (Math.random() - 0.5) * 1.5,
         vy: (Math.random() - 0.5) * 1.5,
-        radius: 30 + Math.random() * 80,
+        radius: 60 + Math.random() * 160,
         freq: 0.5 + Math.random() * 1.5,
         amp: 0.3 + Math.random() * 0.7,
         offset: Math.random() * Math.PI * 2
@@ -62,7 +62,7 @@ const initAsciiCanvas = () => {
       const rotX = dx * Math.cos(w.angle) - dy * Math.sin(w.angle);
       const rotY = dx * Math.sin(w.angle) + dy * Math.cos(w.angle);
       const ellipse = Math.sqrt((rotX / w.rx) ** 2 + (rotY / w.ry) ** 2);
-      v += Math.sin(ellipse * 6 - t * w.speed * 2 + w.phase) * Math.exp(-ellipse * 0.8);
+      v += Math.sin(ellipse * 4 - t * w.speed * 2 + w.phase) * Math.exp(-ellipse * 0.5);
     });
     return v * 0.5 + 0.5;
   };
@@ -73,7 +73,7 @@ const initAsciiCanvas = () => {
       const dx = x - b.x;
       const dy = y - b.y;
       const dist = Math.sqrt(dx * dx + dy * dy);
-      const wave = Math.sin(dist * b.freq * 0.03 - t + b.offset) * b.amp;
+      const wave = Math.sin(dist * b.freq * 0.02 - t + b.offset) * b.amp;
       v += Math.max(0, 1 - dist / b.radius) * (wave * 0.5 + 0.5);
     });
     return Math.min(1, v);
