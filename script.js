@@ -276,14 +276,14 @@ document.addEventListener('DOMContentLoaded', () => {
     a.href = item.project_url;
     a.target = '_blank';
     a.rel = 'noopener';
-    a.className = 'project-link group flex items-baseline justify-between gap-4 border-b border-black/[0.07] dark:border-white/[0.07] py-2.5 hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition';
+    a.className = 'project-link group flex items-start justify-between gap-4 border-b border-black/[0.07] dark:border-white/[0.07] py-3 hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition';
     a.dataset.project = item.title;
     a.innerHTML = `
-      <span class="flex items-baseline gap-3 min-w-0">
-        <span class="text-sm font-medium text-black dark:text-white shrink-0">${item.title}</span>
-        <span class="text-xs text-gray-500 dark:text-gray-500 truncate">${item.project_description || ''}</span>
+      <span class="flex flex-col gap-1 min-w-0">
+        <span class="text-sm font-medium text-black dark:text-white">${item.title}</span>
+        <span class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">${item.project_description || ''}</span>
       </span>
-      ${arrow}`;
+      <span class="mt-0.5">${arrow}</span>`;
     return a;
   };
 

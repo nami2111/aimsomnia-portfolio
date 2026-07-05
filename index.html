@@ -1,99 +1,294 @@
 <!doctype html>
 <html lang="en" class="h-full">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AIMSOMNIA Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@400;500;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['"Google Sans Code"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-            },
-          },
-        },
-      };
-    </script>
-    <style>
-      #ascii-canvas { z-index: 0; opacity: 0.6; }
-      /* thin scrollbar for the inner collection list only */
-      .thin-scroll::-webkit-scrollbar { width: 4px; }
-      .thin-scroll::-webkit-scrollbar-thumb { background: rgba(128,128,128,.35); border-radius: 4px; }
-      .thin-scroll { scrollbar-width: thin; }
-    </style>
-    <meta name="description" content="AIMSOMNIA — minimalist single-screen art collection" />
-  </head>
-  <body class="h-screen overflow-hidden bg-white text-gray-900 dark:bg-black dark:text-gray-100 antialiased font-sans transition-colors duration-300">
-    <!-- Full-screen ascii background (hero style preserved) -->
-    <div class="fixed inset-0 pointer-events-none">
-      <canvas id="ascii-canvas" class="absolute inset-0 bg-white dark:bg-black"></canvas>
-    </div>
-
-    <div class="relative z-10 h-screen flex flex-col mx-auto max-w-5xl px-6 sm:px-8">
-      <!-- Top bar -->
-      <header class="flex items-center justify-between py-5 border-b border-black/10 dark:border-white/10">
-        <a href="#" class="text-sm font-semibold tracking-[0.2em] text-black dark:text-white">AIMSOMNIA</a>
-        <div class="flex items-center gap-5">
-          <span class="hidden sm:block text-xs text-gray-500 dark:text-gray-400">+++A Journey to Better+++</span>
-          <button id="theme-toggle" class="text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition focus:outline-none" aria-label="Toggle theme">
-            <svg class="h-4 w-4 dark-icon hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-            <svg class="h-4 w-4 light-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-          </button>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>AIMSOMNIA Portfolio</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@400;500;700&display=swap"
+            rel="stylesheet"
+        />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                darkMode: "class",
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: [
+                                '"Google Sans Code"',
+                                "ui-sans-serif",
+                                "system-ui",
+                                "sans-serif",
+                            ],
+                        },
+                    },
+                },
+            };
+        </script>
+        <style>
+            #ascii-canvas {
+                z-index: 0;
+                opacity: 0.1;
+            }
+            /* thin scrollbar for the inner collection list only */
+            .thin-scroll::-webkit-scrollbar {
+                width: 4px;
+            }
+            .thin-scroll::-webkit-scrollbar-thumb {
+                background: rgba(128, 128, 128, 0.35);
+                border-radius: 4px;
+            }
+            .thin-scroll {
+                scrollbar-width: thin;
+            }
+        </style>
+        <meta
+            name="description"
+            content="AIMSOMNIA — minimalist single-screen art collection"
+        />
+    </head>
+    <body
+        class="h-screen overflow-hidden bg-white text-gray-900 dark:bg-black dark:text-gray-100 antialiased font-sans transition-colors duration-300"
+    >
+        <!-- Full-screen ascii background (hero style preserved) -->
+        <div class="fixed inset-0 pointer-events-none">
+            <canvas
+                id="ascii-canvas"
+                class="absolute inset-0 bg-white dark:bg-black"
+            ></canvas>
         </div>
-      </header>
 
-      <!-- Hero -->
-      <section class="flex flex-col items-center justify-center text-center py-8 shrink-0">
-        <pre id="hero-rotator" class="text-5xl sm:text-6xl md:text-7xl leading-none font-extrabold text-black dark:text-white uppercase tracking-tight whitespace-pre overflow-hidden max-w-full">AIMSOMNIA</pre>
-      </section>
+        <div
+            class="relative z-10 h-screen flex flex-col mx-auto max-w-5xl px-6 sm:px-8"
+        >
+            <!-- Top bar -->
+            <header
+                class="flex items-center justify-between py-5 border-b border-black/10 dark:border-white/10"
+            >
+                <a
+                    href="#"
+                    class="text-sm font-semibold tracking-[0.2em] text-black dark:text-white"
+                    >AIMSOMNIA</a
+                >
+                <div class="flex items-center gap-5">
+                    <span
+                        class="hidden sm:block text-xs text-gray-500 dark:text-gray-400"
+                        >+++A Journey to Better+++</span
+                    >
+                    <button
+                        id="theme-toggle"
+                        class="text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition focus:outline-none"
+                        aria-label="Toggle theme"
+                    >
+                        <svg
+                            class="h-4 w-4 dark-icon hidden"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.75"
+                        >
+                            <circle cx="12" cy="12" r="5" />
+                            <path
+                                d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+                            />
+                        </svg>
+                        <svg
+                            class="h-4 w-4 light-icon"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.75"
+                        >
+                            <path
+                                d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                            />
+                        </svg>
+                    </button>
+                </div>
+            </header>
 
-      <!-- Two columns: Collection | Vibe-Project -->
-      <div class="flex-1 min-h-0 grid grid-cols-1 md:grid-cols-2 gap-8">
-        <!-- Collection: thin-line list -->
-        <section class="min-h-0 flex flex-col md:border-r md:border-black/10 md:dark:border-white/10 md:pr-8">
-          <div class="flex items-baseline justify-between border-b border-black/10 dark:border-white/10 pb-2">
-            <h2 class="text-xs font-semibold uppercase tracking-[0.2em] text-black dark:text-white">Collection</h2>
-            <span class="text-xs text-gray-400 dark:text-gray-500"><span id="collection-count">0</span> items</span>
-          </div>
-          <div id="collection-grid" class="thin-scroll flex-1 min-h-0 overflow-y-auto"></div>
-          <div id="collection-empty" class="hidden py-6 text-center text-xs text-gray-400 dark:text-gray-500">No collections found.</div>
-        </section>
+            <!-- Hero -->
+            <section
+                class="flex flex-col items-center justify-center text-center py-8 shrink-0"
+            >
+                <pre
+                    id="hero-rotator"
+                    class="text-5xl sm:text-6xl md:text-7xl leading-none font-extrabold text-black dark:text-white uppercase tracking-tight whitespace-pre overflow-hidden max-w-full"
+                >
+AIMSOMNIA</pre>
+            </section>
 
-        <!-- Vibe-Project: thin-line list -->
-        <section class="min-h-0 flex flex-col">
-          <h2 class="text-xs font-semibold uppercase tracking-[0.2em] text-black dark:text-white border-b border-black/10 dark:border-white/10 pb-2">Vibe-Project</h2>
-          <div id="vibe-project-grid" class="thin-scroll flex-1 min-h-0 overflow-y-auto"></div>
-        </section>
-      </div>
+            <!-- Two columns: Collection | Vibe-Project -->
+            <div class="flex-1 min-h-0 grid grid-cols-1 md:grid-cols-5 gap-8">
+                <!-- Collection: thin-line list -->
+                <section
+                    class="min-h-0 flex flex-col md:col-span-2 md:border-r md:border-black/10 md:dark:border-white/10 md:pr-8"
+                >
+                    <div
+                        class="flex items-baseline justify-between border-b border-black/10 dark:border-white/10 pb-2"
+                    >
+                        <h2
+                            class="text-xs font-semibold uppercase tracking-[0.2em] text-black dark:text-white"
+                        >
+                            Collection
+                        </h2>
+                        <span class="text-xs text-gray-400 dark:text-gray-500"
+                            ><span id="collection-count">0</span> items</span
+                        >
+                    </div>
+                    <div
+                        id="collection-grid"
+                        class="thin-scroll flex-1 min-h-0 overflow-y-auto"
+                    ></div>
+                    <div
+                        id="collection-empty"
+                        class="hidden py-6 text-center text-xs text-gray-400 dark:text-gray-500"
+                    >
+                        No collections found.
+                    </div>
+                </section>
 
-      <!-- Footer: small socials -->
-      <footer class="flex items-center justify-between py-4 border-t border-black/10 dark:border-white/10">
-        <p class="text-[11px] text-gray-400 dark:text-gray-500">© 2026 AIMSOMNIA</p>
-        <div class="flex items-center gap-4 text-gray-500 dark:text-gray-400">
-          <a href="https://x.com/aimsomnia" target="_blank" rel="noopener noreferrer" aria-label="X" class="hover:text-black dark:hover:text-white transition"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4"><path d="M18.244 2.25h3.308l-7.227 8.26 8.487 11.24H16.17l-5.35-6.987-6.116 6.987H1.393l7.73-8.833L1 2.25h7.08l4.83 6.354 5.334-6.354Zm-1.16 19.5h1.833L6.01 3.125H4.063L17.084 21.75Z"/></svg></a>
-          <a href="https://taggr.network/user/aimsomnia" target="_blank" rel="noopener noreferrer" aria-label="Taggr" class="hover:text-black dark:hover:text-white transition"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="2" width="3" height="20" rx="0.5"></rect><rect x="17" y="2" width="3" height="20" rx="0.5"></rect><rect x="2" y="6.5" width="20" height="3" rx="0.5"></rect><rect x="2" y="14.5" width="20" height="3" rx="0.5"></rect></svg></a>
-          <a href="https://distrikt.app/u/aimsomnia" target="_blank" rel="noopener noreferrer" aria-label="Distrikt" class="hover:text-black dark:hover:text-white transition"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M0.5,10 L3.5,10 C3.776,10 4,10.224 4,10.5 L4,19.5 C4,19.776 4.224,20 4.5,20 L13.5,20 C13.776,20 14,20.224 14,20.5 L14,23.5 C14,23.776 13.776,24 13.5,24 L0.5,24 C0.224,24 0,23.776 0,23.5 L0,10.5 C0,10.224 0.224,10 0.5,10 Z"></path><path d="M5.5,4 L18.5,4 C18.776,4 19,4.224 19,4.5 L19,17.5 C19,17.776 18.776,18 18.5,18 L15.5,18 C15.224,18 15,17.776 15,17.5 L15,8.5 C15,8.224 14.776,8 14.5,8 L5.5,8 C5.224,8 5,7.776 5,7.5 L5,4.5 C5,4.224 5.224,4 5.5,4 Z"></path><path d="M20.5,0 L23.5,0 C23.776,0 24,0.224 24,0.5 L24,3.5 C24,3.776 23.776,4 23.5,4 L20.5,4 C20.224,4 20,3.776 20,3.5 L20,0.5 C20,0.224 20.224,0 20.5,0 Z"></path></svg></a>
-          <a href="https://github.com/nami2111" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="hover:text-black dark:hover:text-white transition"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+                <!-- Vibe-Project: thin-line list -->
+                <section class="min-h-0 flex flex-col md:col-span-3">
+                    <h2
+                        class="text-xs font-semibold uppercase tracking-[0.2em] text-black dark:text-white border-b border-black/10 dark:border-white/10 pb-2"
+                    >
+                        Vibe-Project
+                    </h2>
+                    <div
+                        id="vibe-project-grid"
+                        class="thin-scroll flex-1 min-h-0 overflow-y-auto"
+                    ></div>
+                </section>
+            </div>
+
+            <!-- Footer: small socials -->
+            <footer
+                class="flex items-center justify-between py-4 border-t border-black/10 dark:border-white/10"
+            >
+                <p class="text-[11px] text-gray-400 dark:text-gray-500">
+                    © 2026 AIMSOMNIA
+                </p>
+                <div
+                    class="flex items-center gap-4 text-gray-500 dark:text-gray-400"
+                >
+                    <a
+                        href="https://x.com/aimsomnia"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="X"
+                        class="hover:text-black dark:hover:text-white transition"
+                        ><svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            class="h-4 w-4"
+                        >
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.487 11.24H16.17l-5.35-6.987-6.116 6.987H1.393l7.73-8.833L1 2.25h7.08l4.83 6.354 5.334-6.354Zm-1.16 19.5h1.833L6.01 3.125H4.063L17.084 21.75Z"
+                            /></svg
+                    ></a>
+                    <a
+                        href="https://taggr.network/user/aimsomnia"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Taggr"
+                        class="hover:text-black dark:hover:text-white transition"
+                        ><svg
+                            class="h-4 w-4"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                        >
+                            <rect
+                                x="4"
+                                y="2"
+                                width="3"
+                                height="20"
+                                rx="0.5"
+                            ></rect>
+                            <rect
+                                x="17"
+                                y="2"
+                                width="3"
+                                height="20"
+                                rx="0.5"
+                            ></rect>
+                            <rect
+                                x="2"
+                                y="6.5"
+                                width="20"
+                                height="3"
+                                rx="0.5"
+                            ></rect>
+                            <rect
+                                x="2"
+                                y="14.5"
+                                width="20"
+                                height="3"
+                                rx="0.5"
+                            ></rect></svg
+                    ></a>
+                    <a
+                        href="https://distrikt.app/u/aimsomnia"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Distrikt"
+                        class="hover:text-black dark:hover:text-white transition"
+                        ><svg
+                            class="h-4 w-4"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                        >
+                            <path
+                                d="M0.5,10 L3.5,10 C3.776,10 4,10.224 4,10.5 L4,19.5 C4,19.776 4.224,20 4.5,20 L13.5,20 C13.776,20 14,20.224 14,20.5 L14,23.5 C14,23.776 13.776,24 13.5,24 L0.5,24 C0.224,24 0,23.776 0,23.5 L0,10.5 C0,10.224 0.224,10 0.5,10 Z"
+                            ></path>
+                            <path
+                                d="M5.5,4 L18.5,4 C18.776,4 19,4.224 19,4.5 L19,17.5 C19,17.776 18.776,18 18.5,18 L15.5,18 C15.224,18 15,17.776 15,17.5 L15,8.5 C15,8.224 14.776,8 14.5,8 L5.5,8 C5.224,8 5,7.776 5,7.5 L5,4.5 C5,4.224 5.224,4 5.5,4 Z"
+                            ></path>
+                            <path
+                                d="M20.5,0 L23.5,0 C23.776,0 24,0.224 24,0.5 L24,3.5 C24,3.776 23.776,4 23.5,4 L20.5,4 C20.224,4 20,3.776 20,3.5 L20,0.5 C20,0.224 20.224,0 20.5,0 Z"
+                            ></path></svg
+                    ></a>
+                    <a
+                        href="https://github.com/nami2111"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="GitHub"
+                        class="hover:text-black dark:hover:text-white transition"
+                        ><svg
+                            class="h-4 w-4"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <path
+                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                            ></path></svg
+                    ></a>
+                </div>
+            </footer>
         </div>
-      </footer>
-    </div>
 
-    <script src="./script.js"></script>
+        <script src="./script.js"></script>
 
-    <!-- Juno Analytics -->
-    <script type="module">
-      import { initOrbiter } from "https://cdn.jsdelivr.net/npm/@junobuild/analytics@0.2.0/+esm";
-      document.addEventListener("DOMContentLoaded", () =>
-        initOrbiter({
-          satelliteId: "njql7-pqaaa-aaaal-asagq-cai",
-          orbiterId: "p2pi7-hiaaa-aaaal-asaia-cai"
-        }), { once: true });
-    </script>
-  </body>
+        <!-- Juno Analytics -->
+        <script type="module">
+            import { initOrbiter } from "https://cdn.jsdelivr.net/npm/@junobuild/analytics@0.2.0/+esm";
+            document.addEventListener(
+                "DOMContentLoaded",
+                () =>
+                    initOrbiter({
+                        satelliteId: "njql7-pqaaa-aaaal-asagq-cai",
+                        orbiterId: "p2pi7-hiaaa-aaaal-asaia-cai",
+                    }),
+                { once: true },
+            );
+        </script>
+    </body>
 </html>
